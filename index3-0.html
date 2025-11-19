@@ -225,9 +225,393 @@
             margin-top: 20px;
             color: #999;
         }
+
+        /* Custom Messenger Styles */
+        .custom-messenger-launcher {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 140px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #4FC3F7 100%);
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .custom-messenger-launcher:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .custom-messenger-launcher.hidden {
+            display: none;
+        }
+
+        .launcher-icon {
+            width: 36px;
+            height: 36px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .launcher-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .unread-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #E91E63;
+            color: white;
+            border-radius: 12px;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 0 6px;
+            border: 2px solid white;
+            display: none;
+        }
+
+        .unread-badge.show {
+            display: flex;
+            animation: badgePulse 0.5s ease;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .messenger-window {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 380px;
+            height: 600px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 999;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .messenger-window.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .messenger-header {
+            background: linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #4FC3F7 100%);
+            color: white;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .messenger-header-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .messenger-header-subtitle {
+            font-size: 12px;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        .messenger-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 0;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.2s;
+        }
+
+        .messenger-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .messenger-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            animation: messageSlideIn 0.3s ease;
+        }
+
+        @keyframes messageSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.agent {
+            justify-content: flex-start;
+        }
+
+        .message.user {
+            justify-content: flex-end;
+        }
+
+        .message-content {
+            max-width: 75%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .message.agent .message-content {
+            background: white;
+            color: #333;
+            border-bottom-left-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #999;
+            margin-top: 4px;
+            padding: 0 4px;
+        }
+
+        .message.agent .message-time {
+            text-align: left;
+        }
+
+        .message.user .message-time {
+            text-align: right;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            border-bottom-left-radius: 4px;
+            max-width: 75px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .typing-indicator.show {
+            display: flex;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #999;
+            border-radius: 50%;
+            animation: typingAnimation 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typingAnimation {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-4px);
+            }
+        }
+
+        .messenger-footer {
+            padding: 16px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .message-input-wrapper {
+            display: flex;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .message-input {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-family: inherit;
+            resize: none;
+            max-height: 100px;
+            min-height: 40px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .message-input:focus {
+            border-color: #FF6B35;
+        }
+
+        .emoji-button {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            transition: transform 0.2s;
+        }
+
+        .emoji-button:hover {
+            transform: scale(1.1);
+        }
+
+        .send-button {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: white;
+        }
+
+        .send-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 8px rgba(255,107,53,0.3);
+        }
+
+        .send-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .emoji-picker {
+            position: absolute;
+            bottom: 70px;
+            right: 16px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 12px;
+            display: none;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 4px;
+            max-width: 300px;
+        }
+
+        .emoji-picker.show {
+            display: grid;
+        }
+
+        .emoji-item {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 4px;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .emoji-item:hover {
+            background: #f0f0f0;
+        }
+
+        .read-receipt {
+            font-size: 11px;
+            color: #4FC3F7;
+            margin-top: 2px;
+            text-align: right;
+            padding: 0 4px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .messenger-window {
+                width: calc(100% - 32px);
+                height: calc(100% - 140px);
+                right: 16px;
+                bottom: 90px;
+            }
+
+            .custom-messenger-launcher {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                right: 16px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
-    <script type="text/javascript" charset="utf-8">
+<script type="text/javascript" charset="utf-8">
   (function (g, e, n, es, ys) {
     g['_genesysJs'] = e;
     g[e] = g[e] || function () {
@@ -241,74 +625,6 @@
     deploymentId: '69eb528f-3a14-4d10-9d33-da71c876a9ee'
   });
 </script>
-<script>
-        // Global variables
-        let UserLoggedIn = false;
-        let Language = 'English';
-
-        // Function to update user login status
-        function updateUserStatus() {
-            const userName = document.getElementById('userName').value;
-            UserLoggedIn = userName !== '';
-
-            console.log('## DEBUG User Status Updated:');
-            console.log('## DEBUG - Selected User:', userName);
-            console.log('## DEBUG - UserLoggedIn:', UserLoggedIn);
-
-            // If condition for when user is logged in
-            if (UserLoggedIn == true) {
-                console.log('## DEBUG ✓ User is logged in - executing logged in actions');
-                // Action to be implemented here
-                Genesys("command", "Launcher.show");
-                console.log('## DEBUG Genesys: Launcher shown');
-                Genesys("command", "Database.update", { messaging: { customAttributes: { CustomerName: userName }}});
-            } else {
-                console.log('## DEBUG ✗ User is not logged in');
-                Genesys("command", "Launcher.hide");
-                console.log('## DEBUG Genesys: Launcher hidden');
-                Genesys("command", "Database.update", { messaging: { customAttributes: { CustomerName: userName }}});
-            }
-        }
-
-        // Function to update language
-        function updateLanguage() {
-            Language = document.getElementById('language').value;
-
-            Genesys("command", "Database.update", { messaging: { customAttributes: { CustomerLanguage: Language }}});
-            console.log('## DEBUG Language Updated:', Language);
-        }
-
-        // Initialize on page load
-        window.addEventListener('DOMContentLoaded', function() {
-            console.log('## DEBUG === Finance Answers Page Loaded ===');
-
-            // Try to set Genesys database - wrapped in try/catch to prevent errors
-            try {
-                console.log('## DEBUG Attempting to set Genesys database...');
-                Genesys("command", "Database.set", {
-                    messaging: {
-                        customAttributes: {
-                            department: "Support",
-                            CustomerLanguage: "English",
-                            CustomerName: ""
-                        }
-                    }
-                });
-                console.log('## DEBUG Genesys database set successfully');
-            } catch (error) {
-                console.log('## DEBUG Error setting Genesys database:', error.message);
-            }
-
-            // Add event listeners
-            document.getElementById('userName').addEventListener('change', updateUserStatus);
-            document.getElementById('language').addEventListener('change', updateLanguage);
-
-            // Initialize variables
-            console.log('## DEBUG Initializing variables...');
-            updateUserStatus();
-            updateLanguage();
-        });
-    </script>
 </head>
 <body>
     <div class="header">
@@ -409,5 +725,393 @@
             <div class="footer-text">© 2025 - UCB Finance Answers</div>
         </div>
     </div>
+
+    <!-- Custom Messenger Launcher Button -->
+    <button id="messengerLauncher" class="custom-messenger-launcher hidden">
+        <div class="launcher-icon">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 2H4C2.9 2 2 2.9 2 4V22L6 18H20C21.1 18 22 17.1 22 16V4C22 2.9 21.1 2 20 2Z" fill="#FF6B35"/>
+                <path d="M6 9H18V11H6V9Z" fill="white"/>
+                <path d="M6 12H15V14H6V12Z" fill="white"/>
+            </svg>
+            <span class="unread-badge" id="unreadBadge">0</span>
+        </div>
+    </button>
+
+    <!-- Custom Messenger Window -->
+    <div id="messengerWindow" class="messenger-window">
+        <div class="messenger-header">
+            <div>
+                <div class="messenger-header-title">Finance Support</div>
+                <div class="messenger-header-subtitle">We're here to help</div>
+            </div>
+            <button class="messenger-close" id="closeMessenger">×</button>
+        </div>
+        
+        <div class="messenger-body" id="messageContainer">
+            <!-- Messages will be inserted here -->
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+            <div class="typing-dot"></div>
+        </div>
+        
+        <div class="messenger-footer">
+            <div class="emoji-picker" id="emojiPicker">
+                <span class="emoji-item">😀</span>
+                <span class="emoji-item">😊</span>
+                <span class="emoji-item">😂</span>
+                <span class="emoji-item">❤️</span>
+                <span class="emoji-item">👍</span>
+                <span class="emoji-item">👏</span>
+                <span class="emoji-item">🎉</span>
+                <span class="emoji-item">🙏</span>
+                <span class="emoji-item">✅</span>
+                <span class="emoji-item">💯</span>
+                <span class="emoji-item">🔥</span>
+                <span class="emoji-item">⭐</span>
+                <span class="emoji-item">💼</span>
+                <span class="emoji-item">📊</span>
+                <span class="emoji-item">💰</span>
+                <span class="emoji-item">📈</span>
+            </div>
+            <div class="message-input-wrapper">
+                <button class="emoji-button" id="emojiButton">😊</button>
+                <textarea 
+                    class="message-input" 
+                    id="messageInput" 
+                    placeholder="Type your message..."
+                    rows="1"
+                ></textarea>
+                <button class="send-button" id="sendButton">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="currentColor"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let UserLoggedIn = false;
+        let Language = 'English';
+        let currentUser = '';
+        let unreadCount = 0;
+        let messengerOpen = false;
+        let conversationId = null;
+
+        // DOM Elements
+        const launcher = document.getElementById('messengerLauncher');
+        const messengerWindow = document.getElementById('messengerWindow');
+        const closeBtn = document.getElementById('closeMessenger');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const messageContainer = document.getElementById('messageContainer');
+        const unreadBadge = document.getElementById('unreadBadge');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const emojiButton = document.getElementById('emojiButton');
+        const emojiPicker = document.getElementById('emojiPicker');
+
+        // Initialize Genesys Messenger
+        function initializeMessenger() {
+            console.log('## DEBUG Initializing Custom Messenger with Headless SDK');
+
+            Genesys("subscribe", "Messenger.ready", function() {
+                console.log('## DEBUG Messenger ready');
+            });
+
+            // Subscribe to new messages
+            Genesys("subscribe", "MessagingService.messagesReceived", function(e) {
+                console.log('## DEBUG Messages received:', e);
+                if (e.data && e.data.messages) {
+                    e.data.messages.forEach(msg => {
+                        addMessage(msg.text, 'agent', msg.from);
+                        if (!messengerOpen) {
+                            incrementUnreadCount();
+                        }
+                    });
+                }
+            });
+
+            // Subscribe to typing indicator
+            Genesys("subscribe", "MessagingService.agentTyping", function(e) {
+                console.log('## DEBUG Agent typing:', e);
+                showTypingIndicator(true);
+            });
+
+            Genesys("subscribe", "MessagingService.agentTypingStopped", function(e) {
+                console.log('## DEBUG Agent stopped typing');
+                showTypingIndicator(false);
+            });
+
+            // Subscribe to conversation events
+            Genesys("subscribe", "MessagingService.conversationStarted", function(e) {
+                console.log('## DEBUG Conversation started:', e);
+                conversationId = e.data.id;
+            });
+        }
+
+        // Update user status
+        function updateUserStatus() {
+            const userName = document.getElementById('userName').value;
+            const previousUser = currentUser;
+            currentUser = userName;
+            UserLoggedIn = userName !== '';
+
+            console.log('## DEBUG User Status Updated:');
+            console.log('## DEBUG - Selected User:', userName);
+            console.log('## DEBUG - UserLoggedIn:', UserLoggedIn);
+
+            // Clear messages if user changed
+            if (previousUser && previousUser !== currentUser) {
+                clearMessages();
+                conversationId = null;
+            }
+
+            if (UserLoggedIn) {
+                console.log('## DEBUG ✓ User is logged in - showing launcher');
+                launcher.classList.remove('hidden');
+                
+                Genesys("command", "Database.update", { 
+                    messaging: { 
+                        customAttributes: { 
+                            CustomerName: userName,
+                            department: "Support"
+                        }
+                    }
+                });
+            } else {
+                console.log('## DEBUG ✗ User is not logged in - hiding launcher');
+                launcher.classList.add('hidden');
+                messengerWindow.classList.remove('show');
+                messengerOpen = false;
+                clearMessages();
+            }
+        }
+
+        // Update language
+        function updateLanguage() {
+            Language = document.getElementById('language').value;
+            Genesys("command", "Database.update", { 
+                messaging: { 
+                    customAttributes: { 
+                        CustomerLanguage: Language 
+                    }
+                }
+            });
+            console.log('## DEBUG Language Updated:', Language);
+        }
+
+        // Toggle messenger window
+        function toggleMessenger() {
+            messengerOpen = !messengerOpen;
+            if (messengerOpen) {
+                messengerWindow.classList.add('show');
+                resetUnreadCount();
+                messageInput.focus();
+                
+                // Start conversation if not already started
+                if (!conversationId) {
+                    Genesys("command", "MessagingService.startConversation");
+                }
+            } else {
+                messengerWindow.classList.remove('show');
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, type = 'user', from = null) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            contentDiv.textContent = text;
+            
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            const now = new Date();
+            timeDiv.textContent = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.appendChild(contentDiv);
+            messageDiv.appendChild(timeDiv);
+            
+            // Add read receipt for user messages
+            if (type === 'user') {
+                const receiptDiv = document.createElement('div');
+                receiptDiv.className = 'read-receipt';
+                receiptDiv.textContent = '✓✓';
+                messageDiv.appendChild(receiptDiv);
+            }
+            
+            messageContainer.appendChild(messageDiv);
+            messageContainer.scrollTop = messageContainer.scrollHeight;
+        }
+
+        // Send message
+        function sendMessage() {
+            const text = messageInput.value.trim();
+            if (text === '') return;
+
+            console.log('## DEBUG Sending message:', text);
+            
+            // Add message to UI
+            addMessage(text, 'user');
+            
+            // Send via Genesys
+            Genesys("command", "MessagingService.sendMessage", {
+                message: text
+            });
+            
+            // Clear input
+            messageInput.value = '';
+            messageInput.style.height = 'auto';
+            sendButton.disabled = false;
+        }
+
+        // Clear all messages
+        function clearMessages() {
+            messageContainer.innerHTML = '';
+            console.log('## DEBUG Messages cleared');
+        }
+
+        // Show/hide typing indicator
+        function showTypingIndicator(show) {
+            if (show) {
+                typingIndicator.classList.add('show');
+                messageContainer.appendChild(typingIndicator);
+                messageContainer.scrollTop = messageContainer.scrollHeight;
+            } else {
+                typingIndicator.classList.remove('show');
+            }
+        }
+
+        // Unread count management
+        function incrementUnreadCount() {
+            unreadCount++;
+            updateUnreadBadge();
+            
+            // Animate launcher button
+            launcher.style.animation = 'none';
+            setTimeout(() => {
+                launcher.style.animation = 'badgePulse 0.5s ease';
+            }, 10);
+        }
+
+        function resetUnreadCount() {
+            unreadCount = 0;
+            updateUnreadBadge();
+        }
+
+        function updateUnreadBadge() {
+            if (unreadCount > 0) {
+                unreadBadge.textContent = unreadCount > 99 ? '99+' : unreadCount;
+                unreadBadge.classList.add('show');
+            } else {
+                unreadBadge.classList.remove('show');
+            }
+        }
+
+        // Auto-resize textarea
+        function autoResizeTextarea() {
+            messageInput.style.height = 'auto';
+            messageInput.style.height = Math.min(messageInput.scrollHeight, 100) + 'px';
+        }
+
+        // Emoji picker toggle
+        function toggleEmojiPicker() {
+            emojiPicker.classList.toggle('show');
+        }
+
+        // Insert emoji
+        function insertEmoji(emoji) {
+            const cursorPos = messageInput.selectionStart;
+            const textBefore = messageInput.value.substring(0, cursorPos);
+            const textAfter = messageInput.value.substring(cursorPos);
+            messageInput.value = textBefore + emoji + textAfter;
+            messageInput.focus();
+            messageInput.selectionStart = messageInput.selectionEnd = cursorPos + emoji.length;
+            emojiPicker.classList.remove('show');
+        }
+
+        // Event Listeners
+        launcher.addEventListener('click', toggleMessenger);
+        closeBtn.addEventListener('click', toggleMessenger);
+
+        sendButton.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        messageInput.addEventListener('input', function() {
+            autoResizeTextarea();
+            sendButton.disabled = messageInput.value.trim() === '';
+        });
+
+        emojiButton.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleEmojiPicker();
+        });
+
+        // Close emoji picker when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!emojiPicker.contains(e.target) && e.target !== emojiButton) {
+                emojiPicker.classList.remove('show');
+            }
+        });
+
+        // Emoji picker items
+        document.querySelectorAll('.emoji-item').forEach(item => {
+            item.addEventListener('click', function() {
+                insertEmoji(this.textContent);
+            });
+        });
+
+        // Initialize on page load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('## DEBUG === Finance Answers Page Loaded ===');
+            console.log('## DEBUG === Custom Messenger with Headless SDK ===');
+
+            // Wait for Genesys to be ready
+            const checkGenesys = setInterval(() => {
+                if (typeof Genesys !== 'undefined') {
+                    clearInterval(checkGenesys);
+                    initializeMessenger();
+                    
+                    // Set initial database
+                    try {
+                        Genesys("command", "Database.set", {
+                            messaging: {
+                                customAttributes: {
+                                    department: "Support",
+                                    CustomerLanguage: "English",
+                                    CustomerName: ""
+                                }
+                            }
+                        });
+                        console.log('## DEBUG Genesys database set successfully');
+                    } catch (error) {
+                        console.log('## DEBUG Error setting Genesys database:', error);
+                    }
+                }
+            }, 100);
+
+            // Add event listeners for user and language selection
+            document.getElementById('userName').addEventListener('change', updateUserStatus);
+            document.getElementById('language').addEventListener('change', updateLanguage);
+
+            // Initialize
+            updateUserStatus();
+            updateLanguage();
+            sendButton.disabled = true;
+        });
+    </script>
 </body>
 </html>
